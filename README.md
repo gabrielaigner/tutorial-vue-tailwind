@@ -73,7 +73,10 @@ More about *configuring* Tailwind is in the [configuration documentation](https:
 
 ## Optimize bundle-size with PurgeCSS
 
-Usually tailwindcss is very big and has more than `600 KB`.
+By default tailwindcss is very big and has more than `600 KB`.
+
+### Step 6
+
 To remove the not used CSS-Classes I use `PurgeCSS`. I install the necessary package:
 
 ```bash
