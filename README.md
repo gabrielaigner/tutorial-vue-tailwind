@@ -16,15 +16,12 @@ After installing `TailwindCSS` as a dependency of my project I add it to the lis
 
 ```js
 // postcss.config.js
-const autoprefixer = require('autoprefixer');
-const tailwindcss = require('tailwindcss');
-
 module.exports = {
   plugins: [
-    tailwindcss,
-    autoprefixer,
+    require('tailwindcss'),
+    require('autoprefixer'),
   ],
-};
+}
 ```
 
 #### Step 3
@@ -33,7 +30,6 @@ Now I create in assets a folder called `/styles` or `/css` and in that a file ca
 
 ```css
 /* src/assets/styles/style.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -74,3 +70,35 @@ module.exports = {
 ```
 
 More about *configuring* Tailwind is in the [configuration documentation](https://tailwindcss.com/docs/configuration/).
+
+## Optimize bundle-size with PurgeCSS
+
+Usually tailwindcss is very big and has more than `600 KB`.
+To remove the not used CSS-Classes I use `PurgeCSS`. I install the necessary package:
+
+```bash
+npm install purgecss  @fullhuman/postcss-purgecss
+```
+
+After installing the `postcss-purgecss plugin`, I must add it to my `postcss.config.js`.
+
+```js
+// postcss.config.js
+module.exports = {
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+
+    // Only uses purgecss in production
+    process.env.NODE_ENV === 'production' && require('@fullhuman/postcss-purgecss')({
+      content: [
+        './src/**/*.html',
+        './src/**/*.vue'
+      ],
+      defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
+    })
+  ],
+}
+```
+
+I now run `npm run build` and the bundle-size should be tiny.
