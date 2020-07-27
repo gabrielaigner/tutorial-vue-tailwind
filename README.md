@@ -29,3 +29,12 @@ module.exports = {
 
 More about *configuring* Tailwind is in the [configuration documentation](https://tailwindcss.com/docs/configuration/).
 
+#### Step 3
+
+Now I create in assets a folder called `/styles` or `/css` and in that a file called `styles.css`. In this I write the following imports:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
